@@ -28,9 +28,15 @@
      Milestone 5. -->
 
 ## Chunking Strategy
+Splitting by pragaraphs - '\n' becuase most documents in campus life corppus have few short sentences with some new line characters in between.
 
 **Chunk size:**
+Paragraph based splitting with a minimum length of 50 characters to filter the headings. Chunks range roughly from 150 to 600 characters.
+
 **Overlap:**
+0 overlap characters
+
+By splitting on natural paragraph boundaries (\n) with 0 overlap and filtering out small parts (< 50 characters), each chunk can be understood on its own without unnecessary noise or sentence fragmentation.
 
 <!-- What about YOUR documents made you pick these numbers? Short posts and
      long sectioned guides don't want the same chunking, and "800 seemed
@@ -53,29 +59,34 @@
 
      Milestone 3. -->
 
-**Chunk 1** — source: `` — produced by: ``
+**Chunk 1** — source: admin_add_drop_deadline.txt#0 `` — produced by: chunker.py::split_documents``
 
 ```
+You can add a course through the end of the second week. Dropping is a longer window — through the end of week six — but a drop after week two shows as a W on your transcript. Nothing anywhere on the registrar's site says this plainly, and students find out from each other.
 ```
 
-**Chunk 2** — source: `` — produced by: ``
+**Chunk 2** — source:course_cs_340_exams.txt#1 `` — produced by:chunker.py::split_documents ``
 
 ```
+Start the term project in week three, not week eight; everyone learns this the hard way.
 ```
 
-**Chunk 3** — source: `` — produced by: ``
+**Chunk 3** — source:course_phys_130_workload.txt#1 `` — produced by:chunker.py::split_documents ``
 
 ```
+It's front-loaded — the first month is heavier than the rest, partly because you're learning the format.
 ```
 
-**Chunk 4** — source: `` — produced by: ``
+**Chunk 4** — source: health_center.txt#0 `` — produced by: chunker.py::split_documents``
 
 ```
+Walk-in hours are 8am to 11am; everything after that is by appointment and appointments run about a week out. If something is urgent, go at 8am and wait rather than booking.
 ```
 
-**Chunk 5** — source: `` — produced by: ``
+**Chunk 5** — source: housing_morrow_house.txt#1  `` — produced by:chunker.py::split_documents ``
 
 ```
+The good: cheapest housing tier by about $900 a year, and the singles are real singles.
 ```
 
 ## Sample Answer
