@@ -26,6 +26,8 @@ contains the answer.
 <!-- e.g. "One of my questions is about a topic only two documents mention, so
      I expect that one to be hard." -->
 
+Because ideally it is best to have all test question asnwers in retrieved chunks but it will be practically challenging, because we are guessing about the chunk size based on corpus and it might not be accurate. So 4 out of 5 is a realistic target.
+
 ---
 
 ## 2. Every answer names a source
@@ -36,6 +38,7 @@ Every answer the system produces names at least one source document.
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
 
+Because if any answer is not present with document then it would be difficult for a me as a user to trust the response. With the document name along with each response, I will be able to cross verify quickly if the response is right or wrong.
 ---
 
 ## 3. The relevance gate stops out-of-corpus questions
@@ -53,9 +56,13 @@ in at least 4 of 5 tries.
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
 
+Because when I asked out of scope questions, mostly it says it doesn't have enough information about it rather than bluffing. Its not 100 percent accurate but its close to it.
+
 ---
 
 ## 4. Something about your chunks
+
+At least 3 out of 5 sampled chunks have a length between 300 to 500 characters with no chunk being an empty header.
 
 <!-- YOU WRITE THIS ONE.
 
@@ -73,11 +80,13 @@ in at least 4 of 5 tries.
 
 **Why this target:**
 
-
+I would chose this because, most of the documents in my corpus have short paragrpah or few lines. So answers to the question should also be in chunks of similar size. If chunk size is more than 500 characters then it might have uncessary information. 
 
 ---
 
 ## 5. Your choice
+
+For at least 4 of my 5 test questions, the generated answer explicitly includes the  actual fact or keyword specified in my expects field, without contradicting the source document
 
 <!-- YOU WRITE THIS ONE TOO.
 
@@ -90,7 +99,7 @@ in at least 4 of 5 tries.
 
 
 **Why this target:**
-
+I chose this because as a student, I would rely on the guide to provide accurate details about things like timings and other campus informations. If a model hallucinate this information then the student will miss out important information. I chose 4 out of 5 because 80% of accuracy is a good benchmark to achieve.
 
 
 ---
