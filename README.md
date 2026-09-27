@@ -134,12 +134,6 @@ My in-corpus questions had best distances between 0.1257 and 0.5829, while all o
 | How do I write a for loop in Rust? |  No | 0.8313   |
 
 ## How I Used AI
-First:  Tuning the chunker
-I asked AI agent how to chunk the campus_life corpus and received answer suggesting 40-character threshold. After inspecting the actual corpus documents, I saw there are longer headings and wanted to avoid breaking them in middle, so I adjusted the threshold to 50 characters.
-
-Second: Reviewing the criteria:
-I asked AI agent for the feedback on the acceptance criteria in criteria.md and initially I wrote criteria 4 about answer length, but realized it needed to measure chunk properties directly then I updated it to evaluate chunk length bounds (300–500 chars) and absence of empty headings.
-
 <!-- Two specific moments. For each: what you asked for, what came back, and
      what you changed about it.
 
@@ -150,8 +144,12 @@ I asked AI agent for the feedback on the acceptance criteria in criteria.md and 
      Milestone 5. -->
 
 **1.**
+Tuning the chunker
+I asked AI agent how to chunk the campus_life corpus and received answer suggesting 40-character threshold. After inspecting the actual corpus documents, I saw there are longer headings and wanted to avoid breaking them in middle, so I adjusted the threshold to 50 characters.
 
 **2.**
+Reviewing the criteria:
+I asked AI agent for the feedback on the acceptance criteria in criteria.md and initially I wrote criteria 4 about answer length, but realized it needed to measure chunk properties directly then I updated it to evaluate chunk length bounds (300–500 chars) and absence of empty headings.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
