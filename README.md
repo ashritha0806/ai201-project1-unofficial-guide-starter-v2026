@@ -95,13 +95,20 @@ The good: cheapest housing tier by about $900 a year, and the singles are real s
      visible. Milestone 4. -->
 
 **Question:**
-
+At what one should go to kestrel commons to get fresh salads?
 **Answer:**
 
 ```
+Based on the documents, to get fresh salads at Kestrel Commons, you should go before 1:30, because the salad bar wilts after that time (found in *dining_kestrel_commons.txt* and *dining_kestrel_commons_followup.txt*).
+
+Sources retrieved: dining_kestrel_commons.txt, dining_kestrel_commons_followup.txt, dining_north_kitchen_followup.txt, housing_fenwick_court.txt
+
+1 model calls this session, 510 tokens (449 in, 61 out)
 ```
 
 **My relevance cutoff:**
+
+My in-corpus questions had best distances between 0.1257 and 0.5829, while all out-of-scope questions had best distances between 0.8243 and 0.9106. A cutoff of 0.65 sits in between 0.58 to 0.82 gap, allowing campus questions through while stopping irrelevant queries.
 
 <!-- The number you set in config.py, and how you got there.
 
@@ -114,7 +121,16 @@ The good: cheapest housing tier by about $900 a year, and the singles are real s
 
 | Question | In corpus? | Best distance |
 |---|---|---|
-|  |  |  |
+| At what one should go to kestrel commons to get fresh salads? |  Yes | 0.5167   |
+| How long will be the wait time for first Counselling session? |  Yes | 0.1257   |
+| What is the frequency of transit shuttle on weekdays? |  Yes | 0.5333    |
+| Where in library one can find white board to study?|  Yes | 0.5829  |
+| How many assessments are there in CS 210 Data Structures? |  Yes | 0.5576   |
+| What is the capital of Mongolia? |  No |  0.8641   |
+| How do I change the oil in a diesel engine? |  No |  0.9106    |
+| Who won the 1994 World Cup? |  No | 0.8736    |
+| What is the recommended dosage of ibuprofen for a headache? |  No | 0.8243   |
+| How do I write a for loop in Rust? |  No | 0.8313   |
 
 ## How I Used AI
 
