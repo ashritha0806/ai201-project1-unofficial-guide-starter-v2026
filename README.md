@@ -235,11 +235,11 @@ Source: health_center.txt
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Retrieved chunk contains the answer (Target: 4 of 5)  | MET | Across all three runs, 4 of 5 questions consistently retrieved chunks containing the factual answer (only the CS 210 question failed retrieval). |
+| 2 | Every answer names a source (Target: 5 of 5)  |  MISSED | The target was 5 of 5, but our runs achieved 4/5, 3/5, and 4/5 because whenever the model lacked enough context (like CS 210), it gave a refusal without citing any source document. |
+| 3 | Gate stops out-of-corpus questions (Target: 4 of 5) | MET | The gate successfully rejected all 5 out-of-scope questions on every run, with distances ranging between 0.824 and 0.911, cleanly above the 0.65 cutoff. |
+| 4 | Sampled chunks between 300-500 chars with no empty header (Target: 3 of 5) |  MISSED |  All 5 sampled chunks had lengths well below 300 characters (ranging from 86 to 270 chars) because the source corpus documents are brief individual paragraphs. |
+| 5 |  Answer includes keyword from expects without contradiction (Target: 4 of 5) | MISSED |  Although runs 1 and 3 got 4 of 5, run 2 dipped to 3 of 5 due to difference in answering the library whiteboard question; because 4 of 5 did not hold across all runs, it is a miss. |
 
 ## Diagnoses
 
