@@ -261,6 +261,21 @@ Source: health_center.txt
 
      Milestone 3. -->
 
+Criterion 2 — Every answer names a source 
+Stage: Generation (generate.py::answer_from_chunks)
+Reason: When the retrieval stage failed to pull the relevant chunk (specifically for the CS 210 question), the model returned a refusal with the message "I do not have enough information" without citing any source document. The source citation only appears when the model actively uses a chunk. A refusal produces no source line, so this criteria failed.
+
+Criterion 4 — Chunks between 300–500 chars
+Stage: Chunking (chunker.py::split_documents)
+Reason:The chunker splits on paragraph breaks (`\n\n`) and discards paragraphs under 50 characters. The campus_life corpus is written as short posts and most source files contain a single paragraph of 80–270 characters. Because the source text itself is shorter than 300 characters, no paragraph-based chunking strategy can produce chunks in the 300–500 character range without merging paragraphs across topic boundaries.
+
+Criterion 5 — Answer includes keyword from expects
+Stage: Retrieval (store.py::search)
+Reason: The CS 210 question ("How many assessments are there in CS 210 Data Structures?") retrieved chunks from biology, economics, English, and physics, never from `course_cs_210_exams.txt`. The embedding for the question matched general course structure documents rather than the specific CS 210 file. Without the right chunk, generation had no fact to include and produced a refusal, missing the expected keyword "two midterms and one final". The Q4 whiteboard question also failed in run 2 because the corpus says "Rooms 210 and 211" with no mention of the library, causing the model to refuse rather than name the location.
+
+**Pattern across misses:** 2 out of 3 missed criteria trace back to the same root cause, the CS 210 question was never retrieved correctly. The embedding for that question matched general course documents rather than the specific CS 210 file. Fixing retrieval for that one question would most likely repair both criteria 2 and 5.
+
+
 ## The Improvement
 
 **What I changed:**
