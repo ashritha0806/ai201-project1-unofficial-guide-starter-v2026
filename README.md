@@ -178,15 +178,49 @@ I asked AI agent for the feedback on the acceptance criteria in criteria.md and 
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 4/5 | 4/5 | 4/5 | MET |
+| 2. Every answer names a source | 5 of 5 | 4/5 | 3/5 | 4/5 | MISSED |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Sampled chunks between 300-500 chars with no empty header| 3 of 5 | 0/5 | 0/5 | 0/5 | MISSED |
+| 5. Answer includes keyword from expects without contradiction | 4 of 5 | 4/5 | 3/5 | 4/5 | MISSED |
 
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
      Name the file and function that produced it. -->
+
+**Criterion 1: Retrieved chunk contains the answer**
+- Produced by: `store.py::search`
+- Question: "At what one should go to kestrel commons to get fresh salads?"
+- Retrieved Sources: `dining_kestrel_commons.txt`, `dining_kestrel_commons_followup.txt`, `dining_north_kitchen_followup.txt`, `housing_fenwick_court.txt` (Best distance: 0.5167)
+- Chunk text: Based on the documents, to avoid the salad bar wilting after 1:30, you should go before 1:30 (dining_kestrel_commons.txt)
+
+
+**Criterion 2: Every answer names a source**
+- Produced by: `generate.py::answer_from_chunks`
+- Question: "How long will be the wait time for first Counselling session?" (Run 1)
+- Answer text: The wait time for a first counselling session is usually three or four days. 
+
+Source: health_center.txt
+
+
+**Criterion 3: Gate stops out-of-corpus questions**
+- Produced by: `gate.py::check_relevance`
+- Cutoff: 0.65
+- Question: "What is the capital of Mongolia?"
+- Distance: 0.864 (> 0.65)
+- Gate output: refused
+
+
+**Criterion 4: Sampled chunks between 300 to 500 chars with no empty header**
+- Produced by: `chunker.py::split_documents`
+- Sample chunk (Chunk 1 from admin_add_drop_deadline.txt#0 — length 270 characters):"You can add a course through the end of the second week. Dropping is a longer window — through the end of week six — but a drop after week two shows as a W on your transcript. Nothing anywhere on the registrar's site says this plainly, and students find out from each other."
+
+
+**Criterion 5: Answer includes keyword from expects without contradiction**
+- Produced by: `generate.py::answer_from_chunks`
+- Question: "What is the frequency of transit shuttle on weekdays?"
+- Answer texts: The transit shuttle runs a loop every 20 minutes on weekdays (from transit_shuttle.txt).
+
 
 ## Verdicts
 
