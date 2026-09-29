@@ -29,15 +29,16 @@ The corpus I picked is 'campus_life',I asked questions about campus dining hours
      Milestone 5. -->
 
 ## Chunking Strategy
-Splitting by pragaraphs - '\n' becuase most documents in campus life corppus have few short sentences with some new line characters in between.
+Splitting by pragaraphs - '\n\n' becuase most documents in campus life corppus have few short sentences with some new line characters in between.
 
 **Chunk size:**
-Paragraph based splitting with a minimum length of 50 characters to filter the headings. Chunks range roughly from 150 to 600 characters.
+Paragraph based splitting with a minimum length of 50 characters to filter the headings. Based on the describe() output, chunks range from 72 to 270 characters on average.
+The 300–500 character target in criteria.md was aspirational, the corpus paragraphs are shorter than that is measured in Criteria 4.
 
 **Overlap:**
 0 overlap characters
 
-By splitting on natural paragraph boundaries (\n) with 0 overlap and filtering out small parts (< 50 characters), each chunk can be understood on its own without unnecessary noise or sentence fragmentation.
+By splitting on natural paragraph boundaries (\n\n) with 0 overlap and filtering out small parts (< 50 characters), each chunk can be understood on its own without unnecessary noise or sentence fragmentation.
 
 <!-- What about YOUR documents made you pick these numbers? Short posts and
      long sectioned guides don't want the same chunking, and "800 seemed

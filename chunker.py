@@ -98,13 +98,14 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
         splitting on a character count?
     """
     chunks: list[Chunk] = []
+    dropped = 0
     for doc in documents:
         # Split on paragraph break
         paragraphs = doc.text.split("\n\n")
         index = 0
         for para in paragraphs:
             piece = para.strip()
-            if len(piece) > 50:
+            if len(piece) > config.CHUNK_MIN_LENGTH:
                 chunks.append(
                     Chunk(
                         text=piece,
@@ -114,9 +115,11 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
                     )
                 )
                 index += 1
+            else:
+                dropped += 1
+    if dropped:
+        print(f"[chunker] dropped {dropped} paragraphs shorter than {config.CHUNK_MIN_LENGTH} chars")
     return chunks
-
-    #return fallback_split(documents)
 
 
 def describe(chunks: list[Chunk]) -> str:
