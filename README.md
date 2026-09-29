@@ -152,6 +152,10 @@ I asked AI agent how to chunk the campus_life corpus and received answer suggest
 Reviewing the criteria:
 I asked AI agent for the feedback on the acceptance criteria in criteria.md and initially I wrote criteria 4 about answer length, but realized it needed to measure chunk properties directly then I updated it to evaluate chunk length bounds (300–500 chars) and absence of empty headings.
 
+**3.**
+Choosing and implementing the Milestone 4 improvement:
+Once I identified my 3 missed criteria, I asked the AI agent to review my plan to fix the chunking strategy and whether any other failure deserved higher priority. The agent confirmed that chunking was the most contained and measurable fix given the time and complexity of alternatives like hybrid search. It then helped me implement the paragraph merging strategy with a buffer. I spotted a bug in the generated code: it was saving `piece` instead of `buffer` to the chunk and fixed that before running the evaluation.
+
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
      claims earns nothing.
@@ -312,6 +316,14 @@ It helped Criteria 4 by turning it from a miss (0/5) into MET (5/5) by merging s
 
 ## What's Still Broken
 
+**Criterion 1 & 5 — Missing expected facts for Question 3 (transit shuttle) and Question 5 (CS 210 assessments)**
+- **What is broken:** Retrieval missed the exact document for CS 210 (`course_cs_210_exams.txt`) and Transit shuttle (`transit_shuttle.txt`), causing generation to output refusals.
+- **What I would do about it:** Increase `TOP_K` to 8–10 or hybrid search which might help with queries containing exact terms and codes like "CS 210" or "transit shuttle".
+- **Why I stopped here:** Milestone 4 asked for one improvement. Changing chunking resolved criteria 4, and implementing hybrid search might become separate pipeline change by itself.
+**Criterion 2 — Source citation omitted on model refusals**
+- **What is broken:** When retrieval fails to return relevant chunks, the model refuses to answer ("I do not have enough information") and does not print any source line.
+- **What I would do about it:** Update `generate.py` prompt or post processing to cite the closest retrieved sources.
+- **Why I stopped here:** This is the downstream of retrieval misses in Question 3 and Question 5, fixing retrieval is the higher priority root cause.
 <!-- For each criterion still missed after your fix: what you'd do about it,
      and why you stopped where you did.
 
@@ -321,7 +333,10 @@ It helped Criteria 4 by turning it from a miss (0/5) into MET (5/5) by merging s
      Milestone 5. -->
 
 ## What I'd Do Differently
-
+Knowing what I know now, I would write **Criteria 4** differently:
+- **Original Criteria:** "Sampled chunks between 300-500 chars with no empty header"
+- **Revised Criteria:** "Sampled chunks contain 1–2 complete paragraphs (average length 150–350 chars) without splitting sentences across chunk boundaries."
+- **Why:** The original character target (300–500 chars) did not fit this corpus. For a short-post corpus like `campus_life`, by forcing chunks into a 300+ character window by merging paragraphs diluted distinct topics and hurt retrieval precision. Checking that chunks keep complete thoughts together is more useful than counting characters.
 <!-- Knowing what you know now — which of your five criteria would you write
      differently, and why?
 
