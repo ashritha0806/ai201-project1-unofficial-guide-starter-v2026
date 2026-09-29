@@ -102,21 +102,38 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
     for doc in documents:
         # Split on paragraph break
         paragraphs = doc.text.split("\n\n")
+        buffer = ""
         index = 0
         for para in paragraphs:
             piece = para.strip()
-            if len(piece) > config.CHUNK_MIN_LENGTH:
+            if not piece:
+                continue
+            if len(piece) < config.CHUNK_MIN_LENGTH:
+                dropped += 1
+                continue
+            #merge into buffer until target min length
+            buffer = (buffer + " " + piece).strip() if buffer else piece
+            if len(buffer) >= config.CHUNK_TARGET_MIN:
                 chunks.append(
                     Chunk(
-                        text=piece,
+                        text=buffer,
                         source=doc.source,
                         index=index,
                         produced_by="chunker.py::split_documents",
                     )
                 )
                 index += 1
-            else:
-                dropped += 1
+                buffer = ""
+            #emit rest from buffer
+        if buffer and len(buffer) > config.CHUNK_MIN_LENGTH:
+            chunks.append(
+                Chunk(
+                    text=buffer,
+                    source=doc.source,
+                    index=index,
+                    produced_by="chunker.py::split_documents",
+                )
+            )
     if dropped:
         print(f"[chunker] dropped {dropped} paragraphs shorter than {config.CHUNK_MIN_LENGTH} chars")
     return chunks

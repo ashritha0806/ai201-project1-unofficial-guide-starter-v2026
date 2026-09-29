@@ -280,8 +280,10 @@ Reason: The CS 210 question ("How many assessments are there in CS 210 Data Stru
 ## The Improvement
 
 **What I changed:**
+I updated `chunker.py::split_documents` to buffer and merge consecutive short paragraphs from the same document until they reach `CHUNK_TARGET_MIN = 300` characters (configured in `config.py`) instead of splitting every paragraph into its own chunk.
 
 **Why I picked it:**
+My diagnosis is for Criteria 4, that splitting on individual paragraphs caused all chunks to fall below 300–500 character target because most corpus files contain very short paragraphs
 
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
@@ -293,14 +295,14 @@ Reason: The CS 210 question ("How many assessments are there in CS 210 Data Stru
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 3/5 | 3/5 | 3/5 | MISSED |
+| 2. Every answer names a source | 5 of 5 | 3/5 | 3/5 | 3/5 | MISSED |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Sampled chunks between 300-500 chars with no empty header| 3 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 5. Answer includes keyword from expects without contradiction | 4 of 5 | 3/5 | 3/5 | 3/5 | MISSED |
 
 **Did it help?**
-
+It helped Criteria 4 by turning it from a miss (0/5) into MET (5/5) by merging short text into properly sized chunks. But merging paragraphs slightly degraded semantic retrieval for Question 3 (transit shuttle), because combining distinct topics diluted the transit keywords, causing Q3 to miss retrieval and lowering Criterion 1 and 5 from 4/5 down to 3/5.
 <!-- Say plainly whether it did, and how you know. If it made things worse,
      say that — a change that backfired, honestly reported, earns full credit
      and is more interesting than one that worked. What matters is that you can
