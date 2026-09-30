@@ -154,7 +154,7 @@ I asked AI agent for the feedback on the acceptance criteria in criteria.md and 
 
 **3.**
 Choosing and implementing the Milestone 4 improvement:
-Once I identified my 3 missed criteria, I asked the AI agent to review my plan to fix the chunking strategy and whether any other failure deserved higher priority. The agent confirmed that chunking was the most contained and measurable fix given the time and complexity of alternatives like hybrid search. It then helped me implement the paragraph merging strategy with a buffer. I spotted a bug in the generated code: it was saving `piece` instead of `buffer` to the chunk and fixed that before running the evaluation.
+Once I identified my 3 missed criteria, I asked the AI agent to review my plan to fix the chunking strategy and whether any other failure deserved higher priority. The agent confirmed that chunking was the most contained and measurable fix given the time and complexity of alternatives like hybrid search. It then helped me implement the paragraph merging strategy with a buffer. I spotted a bug in the generated code: it was saving 'piece' instead of 'buffer' to the chunk and I fixed that before running the evaluation.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
